@@ -3,8 +3,11 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <fstream>
 
 using namespace std;
+
+void saveResultsToCSV(const string& fileName, const string& searchTerm, double frequency);
 
 int main(int argc, char* argv[])
 {
@@ -85,6 +88,9 @@ int main(int argc, char* argv[])
 
         cout << "Flesch Reading Ease: " << fleschReadingEase << endl;
         cout << "Flesch-Kincaid Grade Level: " << fleschKincaidGradeLevel << endl;
+
+        double frequency = (totalWords > 0) ? (static_cast<double>(search.getMatchCount()) / totalWords * 100) : 0.0;
+        saveResultsToCSV(fileName, searchString, frequency);
 
         return EXIT_SUCCESS;
     }

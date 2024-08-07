@@ -26,7 +26,7 @@ vector<string> TextFile::getLines() const {
     return lines;
 }
 
-Search::Search(const std::string& searchTerm, bool isRegex) : searchTerm(searchTerm), isRegex(isRegex) {}
+Search::Search(const std::string& searchTerm, bool isRegex) : searchTerm(searchTerm), isRegex(isRegex), matchCount(0) {}
 
 void Search::execute(const std::vector<std::string>& lines) {
     if (isRegex) {
@@ -172,4 +172,14 @@ double Readability::calculateFleschReadingEase(int totalWords, int totalSentence
 double Readability::calculateFleschKincaidGradeLevel(int totalWords, int totalSentences, int totalSyllables) {
     if (totalWords == 0 || totalSentences == 0) return 0;
     return 0.39 * (static_cast<double>(totalWords) / totalSentences) + 11.8 * (static_cast<double>(totalSyllables) / totalWords) - 15.59;
+}
+void saveResultsToCSV(const std::string& fileName, const std::string& searchTerm, double frequency) {
+    std::ofstream outFile("results.csv", std::ios::app); // Open in append mode
+    if (outFile.is_open()) {
+        outFile << fileName << "," << searchTerm << "," << frequency << "\n";
+        outFile.close();
+    }
+    else {
+        std::cerr << "Failed to open results.csv for writing." << std::endl;
+    }
 }

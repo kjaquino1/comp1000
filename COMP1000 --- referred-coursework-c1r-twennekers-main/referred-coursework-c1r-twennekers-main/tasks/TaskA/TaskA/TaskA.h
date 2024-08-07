@@ -20,11 +20,13 @@ public:
     Search(const std::string& searchTerm, bool isRegex);
     void execute(const std::vector<std::string>& lines);
     void displayResults() const;
+    int getMatchCount() const { return matchCount; }
 
 private:
     std::string searchTerm;
     bool isRegex;
     std::vector<std::pair<int, int>> results; // line number, word number
+    int matchCount = 0;
 };
 
 class Statistics {
@@ -47,5 +49,7 @@ public:
     static double calculateFleschReadingEase(int totalWords, int totalSentences, int totalSyllables);
     static double calculateFleschKincaidGradeLevel(int totalWords, int totalSentences, int totalSyllables);
 };
+
+void saveResultsToCSV(const std::string& fileName, const std::string& searchTerm, double frequency);
 
 #endif // TASKA_H
